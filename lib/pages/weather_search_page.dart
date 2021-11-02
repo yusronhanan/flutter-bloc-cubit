@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cubit_bloc_tutorial/cubit/weather_cubit.dart';
+import 'package:flutter_cubit_bloc_tutorial/bloc/weather_bloc.dart';
+// import 'package:flutter_cubit_bloc_tutorial/cubit/weather_cubit.dart';
 import 'package:flutter_cubit_bloc_tutorial/data/model/weather.dart';
 
 class WeatherSearchPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
         padding: EdgeInsets.symmetric(vertical: 16),
         alignment: Alignment.center,
         // TODO: Implement with cubit
-        child: BlocConsumer<WeatherCubit, WeatherState>(
+        child: BlocConsumer<WeatherBloc, WeatherState>(
           //combined of BlocListener and BlocBuilder
           listener: (context, state) {
             if (state is WeatherError) {
@@ -106,7 +107,14 @@ class CityInputField extends StatelessWidget {
     I replaced the line above with:
     final weatherBloc = context.read()
     */
+    /*
+    //Cubit Implementation
     final weatherCubit = context.read<WeatherCubit>();
     weatherCubit.getWeather(cityName);
+    */
+
+    //Bloc Implementation
+    final weatherBloc = context.read<WeatherBloc>();
+    weatherBloc.add(GetWeather(cityName));
   }
 }
